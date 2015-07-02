@@ -1,0 +1,29 @@
+{
+  "name": "jump-for-joy",
+  "version": "0.1.0",
+  "description": "a platform game",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "build-debug": "browserify --debug src/index.js -t babelify | exorcist build/index.js.map > build/index.js",
+    "copy": "cp src/index.{css,html} build",
+    "uglify": "uglifyjs build/index.js -o build/index.min.js",
+    "build": "mkdir -p build && npm run copy && npm run build-debug"
+  },
+  "keywords": [
+    "platform",
+    "game",
+    "jump"
+  ],
+  "author": "Ben van de Sande",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.6.14",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
+    "exorcist": "^0.4.0",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5"
+  }
+}
