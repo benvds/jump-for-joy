@@ -6,3 +6,10 @@ html, body {
     overflow: hidden;
     background: white;
 }
+
+#canvas {
+    /* width: 100vw; */
+    /* height: 100vh; */
+    background-color: hsl(0, 0%, 90%);
+}
+
