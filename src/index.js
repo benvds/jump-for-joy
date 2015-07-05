@@ -15,10 +15,23 @@ const LEFT_KEY = 37;
 
 let state = {
     subject: {
-        speed: 1,
+        speed: 200, // pixels per second
         left: 0
     }
 };
+
+let prevTimestamp;
+
+function moveRight(delta) {
+    let distance = Math.round(state.subject.speed * delta);
+    let position = state.subject.left + distance;
+
+    if (position > canvasWidth) {
+        state.subject.left = 0;
+    } else {
+        state.subject.left = position;
+    }
+}
 
 function init() {
     canvas.width = canvasWidth;
@@ -28,35 +41,25 @@ function init() {
         if (e.keyCode === LEFT_KEY) {
             let amount = -1 * state.subject.speed;
             let position = state.subject.left + amount;
+
             state.subject.left = position;
-            // console.log('left:', e);
         }
     });
-    window.addEventListener('keydown', function(e) {
-        if (e.keyCode === RIGHT_KEY) {
-            let amount = state.subject.speed;
-            let position = state.subject.left + amount;
-            state.subject.left = position;
-            // console.log('right:', e);
-        }
-    });
-    window.addEventListener('keydown', function(e) {
-        if (e.keyCode === DOWN_KEY) {
-            state.subject.speed--;
-        }
-    });
-    window.addEventListener('keydown', function(e) {
-        if (e.keyCode === UP_KEY) {
-            state.subject.speed++;
-        }
-    });
+
+    prevTimestamp = (new Date()).getTime();
 }
 
 function render() {
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    let curTimestamp = (new Date()).getTime();
+    let delta = (curTimestamp - prevTimestamp) / 1000;
+
+    prevTimestamp = curTimestamp;
+
+    context.clearRect(0, 10, canvasWidth, 60);
     context.fillStyle = 'red';
     context.fillRect(state.subject.left, 10, 50, 50);
 
+    moveRight(delta);
     window.requestAnimationFrame(render);
 }
 
